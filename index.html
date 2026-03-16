@@ -2,19 +2,166 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Wkrótce...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fliperek.pro — wkrótce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; display: flex; align-items: center; 
-           justify-content: center; height: 100vh; margin: 0; background: #f5f5f5; }
-    .box { text-align: center; }
-    h1 { font-size: 2rem; color: #222; }
-    p { color: #666; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f7f4f2;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.6rem, 8vw, 4rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #777;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 36px;
+      height: 2px;
+      background: #9B2255;
+      margin: 0 auto 3rem;
+    }
+
+    .countdown {
+      display: flex;
+      gap: clamp(1rem, 4vw, 2.5rem);
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      line-height: 1;
+      min-width: 2ch;
+      text-align: center;
+    }
+
+    .sep {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #9B2255;
+      align-self: flex-start;
+      margin-top: 4px;
+      line-height: 1;
+    }
+
+    .lbl {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #999;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-size: 0.72rem;
+      color: #ccc;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Wkrótce</h1>
-    <p>Strona jest w trakcie budowy. Zapraszamy niebawem!</p>
+
+  <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#111" stroke-width="5"/>
+    <rect x="26" y="58" width="14" height="18" rx="2" fill="#9B2255"/>
+    <rect x="43" y="44" width="14" height="32" rx="2" fill="#9B2255"/>
+    <rect x="60" y="30" width="14" height="46" rx="2" fill="#9B2255"/>
+  </svg>
+
+  <h1>fliperek.pro</h1>
+  <p class="tagline">Analityka nieruchomości · wkrótce</p>
+  <div class="divider"></div>
+
+  <div class="countdown">
+    <div class="block">
+      <span class="num" id="d">--</span>
+      <span class="lbl">dni</span>
+    </div>
+    <span class="sep">:</span>
+    <div class="block">
+      <span class="num" id="h">--</span>
+      <span class="lbl">godz</span>
+    </div>
+    <span class="sep">:</span>
+    <div class="block">
+      <span class="num" id="m">--</span>
+      <span class="lbl">min</span>
+    </div>
+    <span class="sep">:</span>
+    <div class="block">
+      <span class="num" id="s">--</span>
+      <span class="lbl">sek</span>
+    </div>
   </div>
+
+  <footer>© 2026 fliperek.pro</footer>
+
+  <script>
+    const target = new Date('2026-04-07T00:00:00');
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      const now = new Date();
+      const diff = target - now;
+      if (diff <= 0) {
+        document.getElementById('d').textContent = '00';
+        document.getElementById('h').textContent = '00';
+        document.getElementById('m').textContent = '00';
+        document.getElementById('s').textContent = '00';
+        return;
+      }
+      const days = Math.floor(diff / 86400000);
+      const hrs  = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+      document.getElementById('d').textContent = pad(days);
+      document.getElementById('h').textContent = pad(hrs);
+      document.getElementById('m').textContent = pad(mins);
+      document.getElementById('s').textContent = pad(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+  </script>
+
 </body>
 </html>
